@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
-import { Keyboard, Pressable, Text, TextInput, View } from 'react-native';
+import { Keyboard, Platform, Pressable, Text, TextInput, View } from 'react-native';
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 
 import { requestFormSchema } from '@/types/request.schema';
 import { ServiceRequestFormValues } from '@/types/request';
 import { uiColors } from '@/theme/uiTokens';
+import { formatDate } from '@/utils/formatDate';
 
 interface RequestFormProps {
   isSubmitting: boolean;
@@ -27,6 +30,8 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
     mode: 'onChange',
     resolver: zodResolver(requestFormSchema),
   });
+
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const onSubmitForm = handleSubmit(async (values) => {
     Keyboard.dismiss();
@@ -97,22 +102,45 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
         <Controller
           control={control}
           name="preferredDate"
-          render={({ field: { value, onChange, onBlur } }) => (
-            <TextInput
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              autoCapitalize="none"
-              returnKeyType="done"
-              placeholder="YYYY-MM-DD"
-              style={{
-                borderWidth: 1,
-                borderColor: errors.preferredDate ? uiColors.border.danger : uiColors.border.default,
-                borderRadius: 10,
-                paddingHorizontal: 12,
-                paddingVertical: 10,
-              }}
-            />
+          render={({ field: { value, onChange } }) => (
+            <>
+              <Pressable
+                onPress={() => setShowDatePicker((prev) => !prev)}
+                style={{
+                  borderWidth: 1,
+                  borderColor: errors.preferredDate ? uiColors.border.danger : uiColors.border.default,
+                  borderRadius: 10,
+                  paddingHorizontal: 12,
+                  paddingVertical: 10,
+                }}
+              >
+                <Text style={{ color: value ? uiColors.text.primary : uiColors.text.muted }}>
+                  {value || 'Select preferred date'}
+                </Text>
+              </Pressable>
+              {showDatePicker && (
+                <DateTimePicker
+                  value={value ? new Date(value.replace(/-/g, '/')) : new Date()}
+                  mode="date"
+                  display={Platform.OS === 'ios' ? 'inline' : 'default'}
+                  minimumDate={new Date()}
+                  onChange={(event: DateTimePickerEvent, selectedDate?: Date) => {
+                    if (Platform.OS !== 'ios') {
+                      setShowDatePicker(false);
+                    }
+                    if (event.type === 'set' && selectedDate) {
+                      onChange(formatDate(selectedDate));
+                      if (Platform.OS === 'ios') {
+                        setShowDatePicker(false);
+                      }
+                    }
+                    if (event.type === 'dismissed') {
+                      setShowDatePicker(false);
+                    }
+                  }}
+                />
+              )}
+            </>
           )}
         />
         {errors.preferredDate ? (

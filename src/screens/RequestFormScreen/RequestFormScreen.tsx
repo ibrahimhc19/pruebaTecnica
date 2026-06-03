@@ -67,38 +67,52 @@ export default function RequestFormScreen() {
                 <Text style={{ color: uiColors.text.inverse, fontWeight: '700' }}>Back to Details</Text>
               </Pressable>
             </>
-          ) : (
-            <>
-              {submitSuccess ? (
-                <View
+          ) : submitSuccess ? (
+            <View
+              style={{
+                borderRadius: 10,
+                borderWidth: 1,
+                borderColor: uiColors.border.success,
+                backgroundColor: uiColors.surface.success,
+                padding: 12,
+                gap: 6,
+              }}
+            >
+              <Text style={{ color: uiColors.text.success, fontWeight: '700' }}>Request submitted successfully</Text>
+              <Text style={{ color: uiColors.text.success }}>{submitSuccess.message}</Text>
+              <Text style={{ color: uiColors.text.success }}>Reference: {submitSuccess.requestId}</Text>
+              <View style={{ flexDirection: 'row', gap: 8, marginTop: 6 }}>
+                <Pressable
+                  accessibilityRole="button"
+                  onPress={clearFeedback}
                   style={{
-                    borderRadius: 10,
-                    borderWidth: 1,
-                    borderColor: uiColors.border.success,
-                    backgroundColor: uiColors.surface.success,
-                    padding: 12,
-                    gap: 6,
+                    flex: 1,
+                    borderRadius: 8,
+                    paddingVertical: 10,
+                    alignItems: 'center',
+                    backgroundColor: uiColors.brand.primary,
                   }}
                 >
-                  <Text style={{ color: uiColors.text.success, fontWeight: '700' }}>Request submitted successfully</Text>
-                  <Text style={{ color: uiColors.text.success }}>{submitSuccess.message}</Text>
-                  <Text style={{ color: uiColors.text.success }}>Reference: {submitSuccess.requestId}</Text>
-                  <Pressable
-                    accessibilityRole="button"
-                    onPress={clearFeedback}
-                    style={{
-                      marginTop: 6,
-                      borderRadius: 8,
-                      paddingVertical: 10,
-                      alignItems: 'center',
-                      backgroundColor: uiColors.brand.primary,
-                    }}
-                  >
-                    <Text style={{ color: uiColors.text.inverse, fontWeight: '600' }}>Create Another Request</Text>
-                  </Pressable>
-                </View>
-              ) : null}
-
+                  <Text style={{ color: uiColors.text.inverse, fontWeight: '600' }}>Create Another Request</Text>
+                </Pressable>
+                <Pressable
+                  accessibilityRole="button"
+                  onPress={() => router.replace('/')}
+                  style={{
+                    flex: 1,
+                    borderRadius: 8,
+                    paddingVertical: 10,
+                    alignItems: 'center',
+                    borderWidth: 1,
+                    borderColor: uiColors.border.success,
+                  }}
+                >
+                  <Text style={{ color: uiColors.text.success, fontWeight: '600' }}>Back to Home</Text>
+                </Pressable>
+              </View>
+            </View>
+          ) : (
+            <>
               {submitError ? (
                 <View
                   style={{
