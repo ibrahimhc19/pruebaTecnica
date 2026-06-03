@@ -1,17 +1,17 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 
 import { EmptyState } from '@/components/EmptyState/EmptyState';
 import { RequestForm } from '@/components/RequestForm/RequestForm';
-import { getServiceById } from '@/data/services';
 import { useRequestService } from '@/hooks/useRequestService';
+import { useServiceDetail } from '@/hooks/useServiceDetail';
+import { uiColors } from '@/theme/uiTokens';
 import { ServiceRequestFormValues } from '@/types/request';
-import { uiColors } from '@/utils/uiTokens';
 
 export default function RequestFormScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const service = useMemo(() => getServiceById(id), [id]);
+  const { service } = useServiceDetail(id);
 
   const { isSubmitting, submitError, submitSuccess, submit, clearFeedback } = useRequestService();
 

@@ -1,8 +1,6 @@
-export interface ServiceRequestFormValues {
-  fullName: string;
-  phoneNumber: string;
-  preferredDate: string;
-}
+import type { ServiceRequestFormValues } from '@/types/request.schema';
+
+export type { ServiceRequestFormValues };
 
 export interface ServiceRequestPayload extends ServiceRequestFormValues {
   serviceId: string;

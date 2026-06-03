@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
 
-import { uiColors } from '@/utils/uiTokens';
+import { uiColors } from '@/theme/uiTokens';
 
 interface EmptyStateProps {
   title?: string;

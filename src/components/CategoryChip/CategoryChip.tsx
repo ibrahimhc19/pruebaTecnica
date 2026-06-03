@@ -1,7 +1,7 @@
 import { Pressable, Text } from 'react-native';
 
+import { uiColors } from '@/theme/uiTokens';
 import { ServiceCategory } from '@/types/service';
-import { uiColors } from '@/utils/uiTokens';
 
 interface CategoryChipProps {
   label: string;

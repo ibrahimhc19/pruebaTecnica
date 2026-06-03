@@ -1,6 +1,6 @@
 import { ActivityIndicator, Text, View } from 'react-native';
 
-import { uiColors } from '@/utils/uiTokens';
+import { uiColors } from '@/theme/uiTokens';
 
 interface LoadingStateProps {
   label?: string;

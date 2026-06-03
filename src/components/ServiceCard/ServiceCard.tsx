@@ -1,8 +1,8 @@
 import { Pressable, Text, View } from 'react-native';
 
+import { uiColors } from '@/theme/uiTokens';
 import { formatCurrency } from '@/utils/formatCurrency';
 import { Service } from '@/types/service';
-import { uiColors } from '@/utils/uiTokens';
 
 interface ServiceCardProps {
   service: Service;

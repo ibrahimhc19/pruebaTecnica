@@ -1,28 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { Pressable, Text, TextInput, View } from 'react-native';
-import { z } from 'zod';
 
+import { requestFormSchema } from '@/types/request.schema';
 import { ServiceRequestFormValues } from '@/types/request';
-import { uiColors } from '@/utils/uiTokens';
-
-const requestFormSchema = z.object({
-  fullName: z
-    .string()
-    .trim()
-    .min(3, 'Full Name must have at least 3 characters.'),
-  phoneNumber: z
-    .string()
-    .trim()
-    .regex(/^\+?[0-9\s-]{7,15}$/, 'Enter a valid phone number.'),
-  preferredDate: z
-    .string()
-    .trim()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, 'Use format YYYY-MM-DD.')
-    .refine((value) => !Number.isNaN(Date.parse(value)), {
-      message: 'Enter a valid date.',
-    }),
-});
+import { uiColors } from '@/theme/uiTokens';
 
 interface RequestFormProps {
   isSubmitting: boolean;

@@ -7,18 +7,10 @@ import { ErrorState } from '@/components/ErrorState/ErrorState';
 import { LoadingState } from '@/components/LoadingState/LoadingState';
 import { ServiceCard } from '@/components/ServiceCard/ServiceCard';
 import { useServices } from '@/hooks/useServices';
-import { Service, ServiceCategory } from '@/types/service';
-import { uiColors } from '@/utils/uiTokens';
+import { Service } from '@/types/service';
+import { uiColors } from '@/theme/uiTokens';
 
-const CATEGORY_OPTIONS: { label: string; value: ServiceCategory }[] = [
-  { label: 'All', value: 'all' },
-  { label: 'Cleaning', value: 'cleaning' },
-  { label: 'Plumbing', value: 'plumbing' },
-  { label: 'Electrical', value: 'electrical' },
-  { label: 'Painting', value: 'painting' },
-  { label: 'Appliance', value: 'appliance' },
-  { label: 'Outdoor', value: 'outdoor' },
-];
+import { CATEGORY_OPTIONS } from './constants';
 
 export default function ServicesScreen() {
   const {

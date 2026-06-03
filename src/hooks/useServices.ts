@@ -3,7 +3,18 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { fetchServices } from '@/data/services';
 import { Service, ServiceCategory } from '@/types/service';
 
-export function useServices() {
+interface UseServicesResult {
+  services: Service[];
+  featuredServices: Service[];
+  filteredServices: Service[];
+  isLoading: boolean;
+  error: string | null;
+  retry: () => Promise<void>;
+  activeCategory: ServiceCategory;
+  setActiveCategory: (category: ServiceCategory) => void;
+}
+
+export function useServices(): UseServicesResult {
   const [services, setServices] = useState<Service[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

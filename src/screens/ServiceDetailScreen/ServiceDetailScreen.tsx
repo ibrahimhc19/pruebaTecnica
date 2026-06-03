@@ -1,16 +1,14 @@
-import { useMemo } from 'react';
 import { Pressable, ScrollView, Text, View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 
 import { EmptyState } from '@/components/EmptyState/EmptyState';
-import { getServiceById } from '@/data/services';
+import { useServiceDetail } from '@/hooks/useServiceDetail';
+import { uiColors } from '@/theme/uiTokens';
 import { formatCurrency } from '@/utils/formatCurrency';
-import { uiColors } from '@/utils/uiTokens';
 
 export default function ServiceDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-
-  const service = useMemo(() => getServiceById(id), [id]);
+  const { service } = useServiceDetail(id);
 
   if (!service) {
     return <EmptyState title="Service not found" description="The selected service does not exist." />;
