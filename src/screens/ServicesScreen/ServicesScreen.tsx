@@ -1,5 +1,6 @@
 import { FlatList, ScrollView, Text, View } from 'react-native';
 import { router } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { CategoryChip } from '@/components/CategoryChip/CategoryChip';
 import { EmptyState } from '@/components/EmptyState/EmptyState';
@@ -39,48 +40,50 @@ export default function ServicesScreen() {
   );
 
   return (
-    <FlatList
-      data={filteredServices}
-      keyExtractor={(service) => service.id}
-      renderItem={renderServiceItem}
-      contentContainerStyle={{ padding: 16, paddingBottom: 36 }}
-      ListHeaderComponent={(
-        <>
-          <Text style={{ fontSize: 26, fontWeight: '700', marginBottom: 6 }}>Services</Text>
-          <Text style={{ color: uiColors.text.secondary, marginBottom: 14 }}>
-            Browse home service options and request support quickly.
-          </Text>
+    <SafeAreaView style={{ flex: 1 }} edges={['top']}>
+      <FlatList
+        data={filteredServices}
+        keyExtractor={(service) => service.id}
+        renderItem={renderServiceItem}
+        contentContainerStyle={{ padding: 16, paddingBottom: 36 }}
+        ListHeaderComponent={(
+          <>
+            <Text style={{ fontSize: 26, fontWeight: '700', marginBottom: 6 }}>Services</Text>
+            <Text style={{ color: uiColors.text.secondary, marginBottom: 14 }}>
+              Browse home service options and request support quickly.
+            </Text>
 
-          <Text style={{ fontSize: 19, fontWeight: '600', marginBottom: 10 }}>Featured</Text>
-          <View style={{ marginBottom: 14 }}>
-            {featuredServices.map((service) => (
-              <ServiceCard
-                key={service.id}
-                service={service}
-                variant="featured"
-                onPress={() => router.push(`/services/${service.id}`)}
-              />
-            ))}
-          </View>
+            <Text style={{ fontSize: 19, fontWeight: '600', marginBottom: 10 }}>Featured</Text>
+            <View style={{ marginBottom: 14 }}>
+              {featuredServices.map((service) => (
+                <ServiceCard
+                  key={service.id}
+                  service={service}
+                  variant="featured"
+                  onPress={() => router.push(`/services/${service.id}`)}
+                />
+              ))}
+            </View>
 
-          <Text style={{ fontSize: 19, fontWeight: '600', marginBottom: 10 }}>Categories</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 14 }}>
-            {CATEGORY_OPTIONS.map((category) => (
-              <CategoryChip
-                key={category.value}
-                label={category.label}
-                category={category.value}
-                isActive={category.value === activeCategory}
-                onPress={setActiveCategory}
-              />
-            ))}
-          </ScrollView>
+            <Text style={{ fontSize: 19, fontWeight: '600', marginBottom: 10 }}>Categories</Text>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 14 }}>
+              {CATEGORY_OPTIONS.map((category) => (
+                <CategoryChip
+                  key={category.value}
+                  label={category.label}
+                  category={category.value}
+                  isActive={category.value === activeCategory}
+                  onPress={setActiveCategory}
+                />
+              ))}
+            </ScrollView>
 
-          <Text style={{ fontSize: 19, fontWeight: '600', marginBottom: 10 }}>All Services</Text>
-        </>
-      )}
-      ListEmptyComponent={<EmptyState />}
-      showsVerticalScrollIndicator={false}
-    />
+            <Text style={{ fontSize: 19, fontWeight: '600', marginBottom: 10 }}>All Services</Text>
+          </>
+        )}
+        ListEmptyComponent={<EmptyState />}
+        showsVerticalScrollIndicator={false}
+      />
+    </SafeAreaView>
   );
 }

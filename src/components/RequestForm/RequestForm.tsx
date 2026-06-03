@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { Keyboard, Pressable, Text, TextInput, View } from 'react-native';
 
 import { requestFormSchema } from '@/types/request.schema';
 import { ServiceRequestFormValues } from '@/types/request';
@@ -28,6 +28,11 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
     resolver: zodResolver(requestFormSchema),
   });
 
+  const onSubmitForm = handleSubmit(async (values) => {
+    Keyboard.dismiss();
+    await onSubmit(values);
+  });
+
   return (
     <View style={{ gap: 12 }}>
       <View>
@@ -41,6 +46,7 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
               onChangeText={onChange}
               onBlur={onBlur}
               autoCapitalize="words"
+              returnKeyType="next"
               placeholder="John Doe"
               style={{
                 borderWidth: 1,
@@ -68,6 +74,8 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
               onChangeText={onChange}
               onBlur={onBlur}
               keyboardType="phone-pad"
+              autoCapitalize="none"
+              returnKeyType="next"
               placeholder="+1 555 123 4567"
               style={{
                 borderWidth: 1,
@@ -94,6 +102,8 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
+              autoCapitalize="none"
+              returnKeyType="done"
               placeholder="YYYY-MM-DD"
               style={{
                 borderWidth: 1,
@@ -113,7 +123,7 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
       <Pressable
         accessibilityRole="button"
         disabled={!isValid || isSubmitting}
-        onPress={handleSubmit(onSubmit)}
+        onPress={onSubmitForm}
         style={{
           marginTop: 4,
           borderRadius: 10,
