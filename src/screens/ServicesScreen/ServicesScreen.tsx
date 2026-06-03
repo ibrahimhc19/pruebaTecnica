@@ -74,6 +74,11 @@ export default function ServicesScreen() {
               onPress={setActiveCategory}
             />
           )}
+          onScrollToIndexFailed={({ index }) => {
+            setTimeout(() => {
+              chipListRef.current?.scrollToIndex({ index, animated: true, viewPosition: 0.5 });
+            }, 50);
+          }}
           showsHorizontalScrollIndicator={false}
           style={{ marginBottom: 14 }}
         />
