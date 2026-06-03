@@ -14,7 +14,7 @@ Scope: primitives, layout, navigation, safe areas, keyboard, lists, platform dif
 
 - React Native has **no DOM** — no `div`, `span`, `p`. Everything is a native primitive
 - **Flexbox is the only layout system** — and it defaults to `flexDirection: "column"` (opposite of web)
-- **All styles are inline or StyleSheet** — no CSS classes (unless using NativeWind, see that skill)
+- **All styles are inline or StyleSheet** — no CSS classes
 - Touches are handled with `Pressable` — not `onClick`
 - Text must always be inside a `<Text>` component — never bare strings in JSX
 - Dimensions are in **density-independent pixels (dp)** — not px, rem, or em
@@ -33,7 +33,7 @@ Scope: primitives, layout, navigation, safe areas, keyboard, lists, platform dif
 | `<ul>/<li>` | `<FlatList>` | For lists of any length |
 | `<a>` | `<Link>` from expo-router | Navigation |
 | `onClick` | `onPress` | |
-| CSS classes | `StyleSheet.create` or NativeWind | |
+| CSS classes | `StyleSheet.create` | |
 | `overflow: scroll` | `<ScrollView>` | Only for short content |
 
 ---
@@ -192,7 +192,7 @@ export default function AppLayout() {
 ```tsx
 // app/(app)/_layout.tsx
 import { Tabs } from "expo-router"
-import { Users, CreditCard, LayoutDashboard } from "lucide-react-native"
+import { Users, CreditCard, LayoutDashboard } from "@expo/vector-icons"
 
 export default function TabLayout() {
   return (

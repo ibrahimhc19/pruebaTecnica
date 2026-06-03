@@ -5,7 +5,7 @@ description: Form patterns for React Native using React Hook Form and Zod. Cover
 
 # React Native Forms — React Hook Form + Zod
 
-Stack: React Hook Form · Zod · React Native · NativeWind · Expo  
+Stack: React Hook Form · Zod · React Native · Expo  
 Scope: form setup, input bindings, validation display, keyboard handling, numeric fields, select fields
 
 ---

@@ -10,7 +10,7 @@ interface ErrorStateProps {
 export function ErrorState({ message, onRetry }: ErrorStateProps) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', gap: 10, padding: 16 }}>
-      <Text style={{ color: uiColors.border.danger, textAlign: 'center' }}>{message}</Text>
+      <Text style={{ color: uiColors.text.danger, textAlign: 'center' }}>{message}</Text>
       <Pressable
         accessibilityRole="button"
         onPress={onRetry}

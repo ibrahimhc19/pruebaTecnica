@@ -1,6 +1,3 @@
-/**
- * Formats a Date object to YYYY-MM-DD string.
- */
 export function formatDate(date: Date): string {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');

@@ -13,14 +13,14 @@ export default function ServiceDetailScreen() {
 
   if (!service) {
     return (
-      <ScreenLayout title="Service Details">
+<ScreenLayout>
         <EmptyState title="Service not found" description="The selected service does not exist." />
       </ScreenLayout>
     );
   }
 
   return (
-    <ScreenLayout title="Service Details">
+    <ScreenLayout>
       <ScrollView contentContainerStyle={{ padding: 16, gap: 12, paddingBottom: 36 }}>
         <Text style={{ fontSize: 26, fontWeight: '700' }}>{service.name}</Text>
         <Text style={{ color: uiColors.text.secondary }}>{service.description}</Text>

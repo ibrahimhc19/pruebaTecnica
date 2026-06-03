@@ -31,8 +31,6 @@ cd AcuafitApp
 # Install Expo Router
 npx expo install expo-router react-native-safe-area-context react-native-screens \
   expo-linking expo-constants expo-status-bar
-
-# Install NativeWind (see nativewind skill)
 # Install other dependencies as needed
 ```
 
@@ -60,7 +58,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   version: "1.0.0",
   orientation: "portrait",
   icon: "./assets/icon.png",
-  userInterfaceStyle: "automatic", // supports dark mode
+  userInterfaceStyle: "automatic",
   splash: {
     image: "./assets/splash.png",
     resizeMode: "contain",
@@ -169,40 +167,14 @@ lib/                        # utilities, API client, constants
 
 ```tsx
 import { Stack } from "expo-router"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
-import { useFonts, Inter_400Regular, Inter_600SemiBold, Inter_700Bold } from "@expo-google-fonts/inter"
-import * as SplashScreen from "expo-splash-screen"
-import { useEffect } from "react"
-
-SplashScreen.preventAutoHideAsync()
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: { retry: 2, staleTime: 1000 * 60 * 5 },
-  },
-})
 
 export default function RootLayout() {
-  const [fontsLoaded] = useFonts({
-    Inter_400Regular,
-    Inter_600SemiBold,
-    Inter_700Bold,
-  })
-
-  useEffect(() => {
-    if (fontsLoaded) SplashScreen.hideAsync()
-  }, [fontsLoaded])
-
-  if (!fontsLoaded) return null
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <QueryClientProvider client={queryClient}>
-          <Stack screenOptions={{ headerShown: false }} />
-        </QueryClientProvider>
+        <Stack screenOptions={{ headerShown: false }} />
       </SafeAreaProvider>
     </GestureHandlerRootView>
   )

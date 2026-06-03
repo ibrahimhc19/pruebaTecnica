@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { FlatList, ScrollView, Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import { router } from 'expo-router';
 
 import { CategoryChip } from '@/components/CategoryChip/CategoryChip';
@@ -22,15 +22,18 @@ export default function ServicesScreen() {
     setActiveCategory,
   } = useServices();
 
-  const chipScrollRef = useRef<ScrollView>(null);
-  const chipPositions = useRef<Record<string, number>>({});
+  const chipListRef = useRef<FlatList<(typeof CATEGORY_OPTIONS)[number]>>(null);
+
+  const scrollToChip = useCallback((category: string) => {
+    const index = CATEGORY_OPTIONS.findIndex((c) => c.value === category);
+    if (index === -1 || !chipListRef.current) return;
+    chipListRef.current.scrollToIndex({ index, animated: true, viewPosition: 0.5 });
+  }, []);
 
   useEffect(() => {
-    const x = chipPositions.current[activeCategory];
-    if (x !== undefined && chipScrollRef.current) {
-      chipScrollRef.current.scrollTo({ x: Math.max(0, x - 24), animated: true });
-    }
-  }, [activeCategory]);
+    const timeout = setTimeout(() => scrollToChip(activeCategory), 0);
+    return () => clearTimeout(timeout);
+  }, [activeCategory, scrollToChip]);
 
   const renderServiceItem = useCallback(
     ({ item }: { item: Service }) => (
@@ -58,25 +61,22 @@ export default function ServicesScreen() {
         </View>
 
         <Text style={{ fontSize: 19, fontWeight: '600', marginBottom: 10 }}>Categories</Text>
-        <ScrollView
-          ref={chipScrollRef}
+        <FlatList
+          ref={chipListRef}
           horizontal
+          data={CATEGORY_OPTIONS}
+          keyExtractor={(item) => item.value}
+          renderItem={({ item }) => (
+            <CategoryChip
+              label={item.label}
+              category={item.value}
+              isActive={item.value === activeCategory}
+              onPress={setActiveCategory}
+            />
+          )}
           showsHorizontalScrollIndicator={false}
           style={{ marginBottom: 14 }}
-        >
-          {CATEGORY_OPTIONS.map((category) => (
-            <CategoryChip
-              key={category.value}
-              label={category.label}
-              category={category.value}
-              isActive={category.value === activeCategory}
-              onPress={setActiveCategory}
-              onLayout={(e) => {
-                chipPositions.current[category.value] = e.nativeEvent.layout.x;
-              }}
-            />
-          ))}
-        </ScrollView>
+        />
 
         <Text style={{ fontSize: 19, fontWeight: '600', marginBottom: 10 }}>All Services</Text>
       </>

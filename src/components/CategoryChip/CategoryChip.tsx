@@ -1,4 +1,4 @@
-import { Pressable, Text, type LayoutChangeEvent } from 'react-native';
+import { Pressable, Text } from 'react-native';
 
 import { uiColors } from '@/theme/uiTokens';
 import { ServiceCategory } from '@/types/service';
@@ -8,7 +8,6 @@ interface CategoryChipProps {
   category: ServiceCategory;
   isActive: boolean;
   onPress: (category: ServiceCategory) => void;
-  onLayout?: (event: LayoutChangeEvent) => void;
 }
 
 export function CategoryChip({
@@ -16,13 +15,11 @@ export function CategoryChip({
   category,
   isActive,
   onPress,
-  onLayout,
 }: CategoryChipProps) {
   return (
     <Pressable
       accessibilityRole="button"
       onPress={() => onPress(category)}
-      onLayout={onLayout}
       style={{
         borderRadius: 999,
         paddingVertical: 8,

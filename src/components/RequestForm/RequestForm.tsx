@@ -64,7 +64,7 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
           )}
         />
         {errors.fullName ? (
-          <Text style={{ color: uiColors.border.danger, marginTop: 5 }}>{errors.fullName.message}</Text>
+          <Text style={{ color: uiColors.text.danger, marginTop: 5 }}>{errors.fullName.message}</Text>
         ) : null}
       </View>
 
@@ -93,7 +93,7 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
           )}
         />
         {errors.phoneNumber ? (
-          <Text style={{ color: uiColors.border.danger, marginTop: 5 }}>{errors.phoneNumber.message}</Text>
+          <Text style={{ color: uiColors.text.danger, marginTop: 5 }}>{errors.phoneNumber.message}</Text>
         ) : null}
       </View>
 
@@ -144,7 +144,7 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
           )}
         />
         {errors.preferredDate ? (
-          <Text style={{ color: uiColors.border.danger, marginTop: 5 }}>{errors.preferredDate.message}</Text>
+          <Text style={{ color: uiColors.text.danger, marginTop: 5 }}>{errors.preferredDate.message}</Text>
         ) : null}
       </View>
 

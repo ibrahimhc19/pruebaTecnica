@@ -3,8 +3,6 @@ import { View } from 'react-native';
 
 interface ScreenLayoutProps {
   children: ReactNode;
-  title?: string;
-  showBack?: boolean;
 }
 
 export function ScreenLayout({ children }: ScreenLayoutProps) {
