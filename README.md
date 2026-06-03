@@ -1,56 +1,118 @@
-# Welcome to your Expo app 👋
+# Home Services Marketplace — Expo Technical Assessment
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+React Native + TypeScript technical assessment built with Expo.
 
-## Get started
+## Goal
 
-1. Install dependencies
+Demonstrate:
 
-   ```bash
-   npm install
-   ```
+- clean architecture
+- strong TypeScript usage
+- reusable components
+- complete UX states
+- form validation
+- maintainable engineering decisions
 
-2. Start the app
+## Stack
 
-   ```bash
-   npx expo start
-   ```
+- Expo (SDK 54)
+- React Native
+- TypeScript
+- Expo Router
 
-In the output, you'll find options to open the app in a
+Recommended for forms:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- React Hook Form
+- Zod
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Domain
 
-## Get a fresh project
+Home services marketplace.
 
-When you're ready, run:
+Examples:
 
-```bash
-npm run reset-project
+- House Cleaning
+- Plumbing
+- Electrical Repairs
+- Painting
+- Appliance Repair
+
+## Required Features
+
+1. Services exploration with category filters.
+2. Active filter visually distinct.
+3. Loading, error (with retry), and empty states.
+4. Featured services above main list.
+5. Service detail with availability indicator.
+6. CTA disabled when unavailable with explanation.
+7. Request form with full name, phone, preferred date.
+8. Field-level validation and disabled submit until valid.
+9. Simulated 1.5 second submit with success/error handling.
+
+## Expected Structure
+
+```text
+src/
+   components/
+      ServiceCard/
+      CategoryChip/
+      EmptyState/
+      ErrorState/
+      LoadingState/
+   screens/
+      ServicesScreen/
+      ServiceDetailScreen/
+   hooks/
+   types/
+   data/
+   navigation/
+   utils/
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Scripts
 
-### Other setup steps
+```bash
+npm install
+npm run start
+npm run lint
+npm run typecheck
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+## Assumptions
 
-## Learn more
+- Service data is mocked locally for assessment purposes.
+- Category filtering happens client-side because there is no real backend.
+- Preferred Date is entered using `YYYY-MM-DD` format to keep dependencies minimal.
+- Random failures are intentional to validate loading and submit error states.
 
-To learn more about developing your project with Expo, look at the following resources:
+## Architecture Decisions
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- Kept route entrypoints in `app/` and screen orchestration in `src/screens`.
+- Reused one `ServiceCard` component for featured and main list contexts using a variant prop.
+- Isolated async behavior in hooks and data utilities rather than inside UI components.
+- Used React Hook Form + Zod for predictable field validation and typed form values.
 
-## Join the community
+## Tradeoffs
 
-Join our community of developers creating universal apps.
+- Date input uses text + schema validation instead of a date picker to keep the baseline simple.
+- Fake API behavior is deterministic enough for testing states but not production-grade networking.
+- Styling is intentionally straightforward to prioritize feature correctness over design polish.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Future Improvements
+
+- Introduce a dedicated API layer module with configurable failure rates for better testing.
+- Add date picker UX and phone mask formatting for friendlier form input.
+- Add component tests for loading/error/empty and form validation flows.
+- Extract shared design tokens into a centralized theme file to reduce inline style repetition.
+
+## Engineering Discussion Prompt
+
+What would you change in your solution if this component were used by three different people on the team in different contexts?
+
+Suggested talking points:
+
+- component composition strategy
+- variant patterns
+- scaling without prop explosion
+- design system evolution
+- ownership boundaries between feature and shared UI
