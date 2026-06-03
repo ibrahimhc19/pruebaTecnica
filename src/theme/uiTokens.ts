@@ -22,8 +22,8 @@ export const uiColors = {
     danger: '#fef2f2',
   },
   brand: {
-    primary: '#0f766e',
-    chipActiveText: '#115e59',
+    primary: '#1B6B52',
+    chipActiveText: '#1B6B52',
   },
   state: {
     disabled: '#9ca3af',
