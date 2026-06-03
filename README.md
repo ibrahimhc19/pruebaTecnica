@@ -1,5 +1,9 @@
 # Home Services Marketplace
 
+*¿Qué cambiarías en tu solución si este componente lo fueran a usar tres personas distintas del equipo en contextos diferentes?*
+
+Para esta prueba opté por una solución basada en una prop variant, ya que solo existen dos contextos claramente definidos y permite mantener la implementación simple y fácil de entender. Si el componente comenzara a ser utilizado en más escenarios por distintos desarrolladores, consideraría migrar hacia un enfoque basado en composición, similar al utilizado por bibliotecas como Shadcn UI, para mejorar la escalabilidad, reutilización y mantenibilidad del código.
+
 ## Clone
 
 ```bash
