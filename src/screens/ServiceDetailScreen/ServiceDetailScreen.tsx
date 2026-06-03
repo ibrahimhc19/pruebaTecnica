@@ -22,9 +22,9 @@ export default function ServiceDetailScreen() {
   return (
     <ScreenLayout title="Service Details">
       <ScrollView contentContainerStyle={{ padding: 16, gap: 12, paddingBottom: 36 }}>
-        <Text style={{ fontSize: 26, fontWeight: '700' }}>{service.title}</Text>
+        <Text style={{ fontSize: 26, fontWeight: '700' }}>{service.name}</Text>
         <Text style={{ color: uiColors.text.secondary }}>{service.description}</Text>
-        <Text style={{ fontSize: 16, fontWeight: '600' }}>Starting at {formatCurrency(service.basePrice)}</Text>
+        <Text style={{ fontSize: 16, fontWeight: '600' }}>Starting at {formatCurrency(service.price, service.currency)}</Text>
 
         <View
           style={{
@@ -37,34 +37,34 @@ export default function ServiceDetailScreen() {
         >
           <Text style={{ color: uiColors.text.muted }}>Category: {service.category}</Text>
           <Text style={{ color: uiColors.text.muted }}>
-            Duration: {service.estimatedDurationMinutes} minutes
+            Duration: {service.durationMinutes} minutes
           </Text>
           <Text style={{ color: uiColors.text.muted }}>
-            Rating: {service.providerRating.toFixed(1)} ({service.reviewCount} reviews)
+            Rating: {service.rating.toFixed(1)} ({service.reviewCount} reviews)
           </Text>
-          <Text style={{ color: uiColors.text.muted }}>Featured: {service.isFeatured ? 'Yes' : 'No'}</Text>
+          <Text style={{ color: uiColors.text.muted }}>Provider: {service.providerName}</Text>
         </View>
 
         <View
           style={{
             borderRadius: 10,
             borderWidth: 1,
-            borderColor: service.isAvailable ? uiColors.border.success : uiColors.border.danger,
+            borderColor: service.available ? uiColors.border.success : uiColors.border.danger,
             padding: 12,
-            backgroundColor: service.isAvailable ? uiColors.surface.success : uiColors.surface.danger,
+            backgroundColor: service.available ? uiColors.surface.success : uiColors.surface.danger,
           }}
         >
-          <Text style={{ color: service.isAvailable ? uiColors.text.success : uiColors.text.danger, fontWeight: '600' }}>
-            {service.isAvailable ? 'Available now' : 'Currently unavailable'}
+          <Text style={{ color: service.available ? uiColors.text.success : uiColors.text.danger, fontWeight: '600' }}>
+            {service.available ? 'Available now' : 'Currently unavailable'}
           </Text>
-          {!service.isAvailable && service.unavailableReason ? (
+          {!service.available && service.unavailableReason ? (
             <Text style={{ color: uiColors.text.danger, marginTop: 6 }}>{service.unavailableReason}</Text>
           ) : null}
         </View>
 
         <Pressable
           accessibilityRole="button"
-          disabled={!service.isAvailable}
+          disabled={!service.available}
           onPress={() => {
             router.push(`/services/${service.id}/request`);
           }}
@@ -74,8 +74,8 @@ export default function ServiceDetailScreen() {
             paddingVertical: 14,
             paddingHorizontal: 14,
             alignItems: 'center',
-            backgroundColor: service.isAvailable ? uiColors.brand.primary : uiColors.state.disabled,
-            opacity: service.isAvailable ? 1 : 0.75,
+            backgroundColor: service.available ? uiColors.brand.primary : uiColors.state.disabled,
+            opacity: service.available ? 1 : 0.75,
           }}
         >
           <Text style={{ color: uiColors.text.inverse, fontWeight: '700' }}>Request Service</Text>

@@ -9,14 +9,16 @@ export type ServiceCategory =
 
 export interface Service {
   id: string;
-  title: string;
-  description: string;
+  name: string;
   category: Exclude<ServiceCategory, 'all'>;
-  basePrice: number;
-  estimatedDurationMinutes: number;
-  providerRating: number;
+  description: string;
+  price: number;
+  currency: string;
+  rating: number;
   reviewCount: number;
-  isAvailable: boolean;
+  available: boolean;
   unavailableReason?: string;
-  isFeatured: boolean;
+  providerName: string;
+  durationMinutes: number;
+  tags: string[];
 }

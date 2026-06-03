@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { FlatList, ScrollView, Text, View } from 'react-native';
 import { router } from 'expo-router';
 
@@ -21,6 +21,16 @@ export default function ServicesScreen() {
     activeCategory,
     setActiveCategory,
   } = useServices();
+
+  const chipScrollRef = useRef<ScrollView>(null);
+  const chipPositions = useRef<Record<string, number>>({});
+
+  useEffect(() => {
+    const x = chipPositions.current[activeCategory];
+    if (x !== undefined && chipScrollRef.current) {
+      chipScrollRef.current.scrollTo({ x: Math.max(0, x - 24), animated: true });
+    }
+  }, [activeCategory]);
 
   const renderServiceItem = useCallback(
     ({ item }: { item: Service }) => (
@@ -48,7 +58,12 @@ export default function ServicesScreen() {
         </View>
 
         <Text style={{ fontSize: 19, fontWeight: '600', marginBottom: 10 }}>Categories</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 14 }}>
+        <ScrollView
+          ref={chipScrollRef}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{ marginBottom: 14 }}
+        >
           {CATEGORY_OPTIONS.map((category) => (
             <CategoryChip
               key={category.value}
@@ -56,6 +71,9 @@ export default function ServicesScreen() {
               category={category.value}
               isActive={category.value === activeCategory}
               onPress={setActiveCategory}
+              onLayout={(e) => {
+                chipPositions.current[category.value] = e.nativeEvent.layout.x;
+              }}
             />
           ))}
         </ScrollView>

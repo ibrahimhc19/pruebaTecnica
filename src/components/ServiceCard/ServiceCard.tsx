@@ -17,7 +17,8 @@ export function ServiceCard({
   onPress,
   variant = 'default',
 }: ServiceCardProps) {
-  const badgeText = service.isAvailable ? 'Available' : 'Unavailable';
+  const isFeatured = variant === 'featured';
+  const badgeText = service.available ? 'Available' : 'Unavailable';
   const chipColors = CATEGORY_COLORS[service.category];
 
   return (
@@ -28,15 +29,18 @@ export function ServiceCard({
         borderWidth: 1,
         borderColor: uiColors.border.default,
         borderRadius: 12,
-        padding: 16,
+        padding: isFeatured ? 12 : 16,
         marginBottom: 12,
-        backgroundColor: variant === 'featured' ? uiColors.surface.featured : uiColors.surface.base,
+        backgroundColor: isFeatured ? uiColors.surface.featured : uiColors.surface.base,
       }}
     >
-      <View style={{ gap: 8 }}>
+      <View style={{ gap: isFeatured ? 6 : 8 }}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Text style={{ fontSize: 18, fontWeight: '600', flexShrink: 1 }}>{service.title}</Text>
-          <Text style={{
+          <Text style={{ fontSize: isFeatured ? 15 : 18, fontWeight: '600', flexShrink: 1 }}>
+            {service.name}
+          </Text>
+          <Text
+            style={{
               fontSize: 12,
               fontWeight: '500',
               color: chipColors.text,
@@ -46,23 +50,55 @@ export function ServiceCard({
               borderRadius: 6,
               overflow: 'hidden',
               marginLeft: 8,
-            }}>
+            }}
+          >
             {CATEGORY_LABELS[service.category]}
           </Text>
         </View>
 
-        <Text style={{ color: uiColors.text.secondary }}>{service.description}</Text>
+        {!isFeatured && (
+          <Text style={{ color: uiColors.text.secondary }}>{service.description}</Text>
+        )}
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Text style={{ fontWeight: '500' }}>{formatCurrency(service.basePrice)}</Text>
-          <Text style={{ color: uiColors.text.secondary }}>
-            {service.providerRating.toFixed(1)} ★ ({service.reviewCount})
+          <Text style={{ fontWeight: isFeatured ? '700' : '500', fontSize: isFeatured ? 16 : 15 }}>
+            {formatCurrency(service.price, service.currency)}
           </Text>
+          {isFeatured ? (
+            <View
+              style={{
+                paddingHorizontal: 8,
+                paddingVertical: 2,
+                borderRadius: 6,
+                backgroundColor: service.available
+                  ? uiColors.surface.success
+                  : uiColors.surface.danger,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: '500',
+                  color: service.available
+                    ? uiColors.border.success
+                    : uiColors.border.danger,
+                }}
+              >
+                {badgeText}
+              </Text>
+            </View>
+          ) : (
+            <Text style={{ color: uiColors.text.secondary }}>
+              {service.rating.toFixed(1)} ★ ({service.reviewCount})
+            </Text>
+          )}
         </View>
 
-        <Text style={{ color: service.isAvailable ? uiColors.border.success : uiColors.border.danger }}>
-          {badgeText}
-        </Text>
+        {!isFeatured && (
+          <Text style={{ color: service.available ? uiColors.border.success : uiColors.border.danger }}>
+            {badgeText}
+          </Text>
+        )}
       </View>
     </Pressable>
   );

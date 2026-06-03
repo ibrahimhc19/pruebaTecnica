@@ -44,7 +44,7 @@ export function useServices(): UseServicesResult {
   }, [load]);
 
   const featuredServices = useMemo(
-    () => services.filter((service) => service.isFeatured),
+    () => services.filter((service) => service.tags.includes('popular')),
     [services],
   );
 

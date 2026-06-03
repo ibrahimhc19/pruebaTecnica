@@ -45,9 +45,9 @@ export default function RequestFormScreen() {
           contentContainerStyle={{ padding: 16, gap: 12, paddingBottom: 36 }}
           keyboardShouldPersistTaps="handled"
         >
-          <Text style={{ fontSize: 20, fontWeight: '700' }}>{service.title}</Text>
+          <Text style={{ fontSize: 20, fontWeight: '700' }}>{service.name}</Text>
 
-          {!service.isAvailable ? (
+          {!service.available ? (
             <>
               <Text style={{ color: uiColors.text.danger }}>
                 This service is currently unavailable. Try another service or come back later.
