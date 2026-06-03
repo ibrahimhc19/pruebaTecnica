@@ -13,10 +13,11 @@ export default function ServiceDetailScreen() {
 
   if (!service) {
     return (
-<ScreenLayout>
+      <ScreenLayout>
         <EmptyState title="Service not found" description="The selected service does not exist." />
       </ScreenLayout>
     );
+  }
   }
 
   return (
