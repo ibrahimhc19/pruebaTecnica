@@ -9,6 +9,7 @@ import { LoadingState } from '@/components/LoadingState/LoadingState';
 import { ServiceCard } from '@/components/ServiceCard/ServiceCard';
 import { useServices } from '@/hooks/useServices';
 import { ServiceCategory } from '@/types/service';
+import { uiColors } from '@/utils/uiTokens';
 
 const CATEGORY_OPTIONS: { label: string; value: ServiceCategory }[] = [
   { label: 'All', value: 'all' },
@@ -44,7 +45,7 @@ export default function ServicesScreen() {
   return (
     <ScrollView contentContainerStyle={{ padding: 16, paddingBottom: 36 }}>
       <Text style={{ fontSize: 26, fontWeight: '700', marginBottom: 6 }}>Services</Text>
-      <Text style={{ color: '#4b5563', marginBottom: 14 }}>
+      <Text style={{ color: uiColors.text.secondary, marginBottom: 14 }}>
         Browse home service options and request support quickly.
       </Text>
 

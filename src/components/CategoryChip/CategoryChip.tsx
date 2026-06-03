@@ -1,6 +1,7 @@
 import { Pressable, Text } from 'react-native';
 
 import { ServiceCategory } from '@/types/service';
+import { uiColors } from '@/utils/uiTokens';
 
 interface CategoryChipProps {
   label: string;
@@ -25,11 +26,13 @@ export function CategoryChip({
         paddingHorizontal: 14,
         marginRight: 8,
         borderWidth: 1,
-        borderColor: isActive ? '#0f766e' : '#d1d5db',
-        backgroundColor: isActive ? '#ccfbf1' : '#f9fafb',
+        borderColor: isActive ? uiColors.brand.primary : uiColors.border.default,
+        backgroundColor: isActive ? uiColors.surface.chipActive : uiColors.surface.subtle,
       }}
     >
-      <Text style={{ color: isActive ? '#115e59' : '#374151', fontWeight: '500' }}>{label}</Text>
+      <Text style={{ color: isActive ? uiColors.brand.chipActiveText : uiColors.text.muted, fontWeight: '500' }}>
+        {label}
+      </Text>
     </Pressable>
   );
 }

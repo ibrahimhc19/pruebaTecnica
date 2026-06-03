@@ -2,6 +2,7 @@ import { Pressable, Text, View } from 'react-native';
 
 import { formatCurrency } from '@/utils/formatCurrency';
 import { Service } from '@/types/service';
+import { uiColors } from '@/utils/uiTokens';
 
 interface ServiceCardProps {
   service: Service;
@@ -22,18 +23,20 @@ export function ServiceCard({
       onPress={() => onPress?.(service)}
       style={{
         borderWidth: 1,
-        borderColor: '#d1d5db',
+        borderColor: uiColors.border.default,
         borderRadius: 12,
         padding: 16,
         marginBottom: 12,
-        backgroundColor: variant === 'featured' ? '#e0f7fa' : '#ffffff',
+        backgroundColor: variant === 'featured' ? uiColors.surface.featured : uiColors.surface.base,
       }}
     >
       <View style={{ gap: 6 }}>
         <Text style={{ fontSize: 18, fontWeight: '600' }}>{service.title}</Text>
-        <Text style={{ color: '#4b5563' }}>{service.description}</Text>
+        <Text style={{ color: uiColors.text.secondary }}>{service.description}</Text>
         <Text style={{ fontWeight: '500' }}>{formatCurrency(service.basePrice)}</Text>
-        <Text style={{ color: service.isAvailable ? '#15803d' : '#b91c1c' }}>{badgeText}</Text>
+        <Text style={{ color: service.isAvailable ? uiColors.border.success : uiColors.border.danger }}>
+          {badgeText}
+        </Text>
       </View>
     </Pressable>
   );

@@ -5,6 +5,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { EmptyState } from '@/components/EmptyState/EmptyState';
 import { getServiceById } from '@/data/services';
 import { formatCurrency } from '@/utils/formatCurrency';
+import { uiColors } from '@/utils/uiTokens';
 
 export default function ServiceDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -18,34 +19,42 @@ export default function ServiceDetailScreen() {
   return (
     <ScrollView contentContainerStyle={{ padding: 16, gap: 12 }}>
       <Text style={{ fontSize: 26, fontWeight: '700' }}>{service.title}</Text>
-      <Text style={{ color: '#4b5563' }}>{service.description}</Text>
+      <Text style={{ color: uiColors.text.secondary }}>{service.description}</Text>
       <Text style={{ fontSize: 16, fontWeight: '600' }}>Starting at {formatCurrency(service.basePrice)}</Text>
 
-      <View style={{ borderRadius: 10, borderWidth: 1, borderColor: '#d1d5db', padding: 12, gap: 6 }}>
-        <Text style={{ color: '#374151' }}>Category: {service.category}</Text>
-        <Text style={{ color: '#374151' }}>
+      <View
+        style={{
+          borderRadius: 10,
+          borderWidth: 1,
+          borderColor: uiColors.border.default,
+          padding: 12,
+          gap: 6,
+        }}
+      >
+        <Text style={{ color: uiColors.text.muted }}>Category: {service.category}</Text>
+        <Text style={{ color: uiColors.text.muted }}>
           Duration: {service.estimatedDurationMinutes} minutes
         </Text>
-        <Text style={{ color: '#374151' }}>
+        <Text style={{ color: uiColors.text.muted }}>
           Rating: {service.providerRating.toFixed(1)} ({service.reviewCount} reviews)
         </Text>
-        <Text style={{ color: '#374151' }}>Featured: {service.isFeatured ? 'Yes' : 'No'}</Text>
+        <Text style={{ color: uiColors.text.muted }}>Featured: {service.isFeatured ? 'Yes' : 'No'}</Text>
       </View>
 
       <View
         style={{
           borderRadius: 10,
           borderWidth: 1,
-          borderColor: service.isAvailable ? '#15803d' : '#b91c1c',
+          borderColor: service.isAvailable ? uiColors.border.success : uiColors.border.danger,
           padding: 12,
-          backgroundColor: service.isAvailable ? '#f0fdf4' : '#fef2f2',
+          backgroundColor: service.isAvailable ? uiColors.surface.success : uiColors.surface.danger,
         }}
       >
-        <Text style={{ color: service.isAvailable ? '#166534' : '#991b1b', fontWeight: '600' }}>
+        <Text style={{ color: service.isAvailable ? uiColors.text.success : uiColors.text.danger, fontWeight: '600' }}>
           {service.isAvailable ? 'Available now' : 'Currently unavailable'}
         </Text>
         {!service.isAvailable && service.unavailableReason ? (
-          <Text style={{ color: '#991b1b', marginTop: 6 }}>{service.unavailableReason}</Text>
+          <Text style={{ color: uiColors.text.danger, marginTop: 6 }}>{service.unavailableReason}</Text>
         ) : null}
       </View>
 
@@ -61,11 +70,11 @@ export default function ServiceDetailScreen() {
           paddingVertical: 12,
           paddingHorizontal: 14,
           alignItems: 'center',
-          backgroundColor: service.isAvailable ? '#0f766e' : '#9ca3af',
+          backgroundColor: service.isAvailable ? uiColors.brand.primary : uiColors.state.disabled,
           opacity: service.isAvailable ? 1 : 0.75,
         }}
       >
-        <Text style={{ color: '#f0fdfa', fontWeight: '700' }}>Request Service</Text>
+        <Text style={{ color: uiColors.text.inverse, fontWeight: '700' }}>Request Service</Text>
       </Pressable>
     </ScrollView>
   );

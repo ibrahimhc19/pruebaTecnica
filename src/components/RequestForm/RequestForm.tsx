@@ -4,6 +4,7 @@ import { Pressable, Text, TextInput, View } from 'react-native';
 import { z } from 'zod';
 
 import { ServiceRequestFormValues } from '@/types/request';
+import { uiColors } from '@/utils/uiTokens';
 
 const requestFormSchema = z.object({
   fullName: z
@@ -61,7 +62,7 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
               placeholder="John Doe"
               style={{
                 borderWidth: 1,
-                borderColor: errors.fullName ? '#b91c1c' : '#d1d5db',
+                borderColor: errors.fullName ? uiColors.border.danger : uiColors.border.default,
                 borderRadius: 10,
                 paddingHorizontal: 12,
                 paddingVertical: 10,
@@ -70,7 +71,7 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
           )}
         />
         {errors.fullName ? (
-          <Text style={{ color: '#b91c1c', marginTop: 5 }}>{errors.fullName.message}</Text>
+          <Text style={{ color: uiColors.border.danger, marginTop: 5 }}>{errors.fullName.message}</Text>
         ) : null}
       </View>
 
@@ -88,7 +89,7 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
               placeholder="+1 555 123 4567"
               style={{
                 borderWidth: 1,
-                borderColor: errors.phoneNumber ? '#b91c1c' : '#d1d5db',
+                borderColor: errors.phoneNumber ? uiColors.border.danger : uiColors.border.default,
                 borderRadius: 10,
                 paddingHorizontal: 12,
                 paddingVertical: 10,
@@ -97,7 +98,7 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
           )}
         />
         {errors.phoneNumber ? (
-          <Text style={{ color: '#b91c1c', marginTop: 5 }}>{errors.phoneNumber.message}</Text>
+          <Text style={{ color: uiColors.border.danger, marginTop: 5 }}>{errors.phoneNumber.message}</Text>
         ) : null}
       </View>
 
@@ -114,7 +115,7 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
               placeholder="YYYY-MM-DD"
               style={{
                 borderWidth: 1,
-                borderColor: errors.preferredDate ? '#b91c1c' : '#d1d5db',
+                borderColor: errors.preferredDate ? uiColors.border.danger : uiColors.border.default,
                 borderRadius: 10,
                 paddingHorizontal: 12,
                 paddingVertical: 10,
@@ -123,7 +124,7 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
           )}
         />
         {errors.preferredDate ? (
-          <Text style={{ color: '#b91c1c', marginTop: 5 }}>{errors.preferredDate.message}</Text>
+          <Text style={{ color: uiColors.border.danger, marginTop: 5 }}>{errors.preferredDate.message}</Text>
         ) : null}
       </View>
 
@@ -137,10 +138,10 @@ export function RequestForm({ isSubmitting, onSubmit }: RequestFormProps) {
           paddingVertical: 12,
           paddingHorizontal: 14,
           alignItems: 'center',
-          backgroundColor: !isValid || isSubmitting ? '#9ca3af' : '#0f766e',
+          backgroundColor: !isValid || isSubmitting ? uiColors.state.disabled : uiColors.brand.primary,
         }}
       >
-        <Text style={{ color: '#f0fdfa', fontWeight: '700' }}>
+        <Text style={{ color: uiColors.text.inverse, fontWeight: '700' }}>
           {isSubmitting ? 'Submitting request...' : 'Submit Request'}
         </Text>
       </Pressable>

@@ -1,5 +1,7 @@
 import { Pressable, Text, View } from 'react-native';
 
+import { uiColors } from '@/utils/uiTokens';
+
 interface ErrorStateProps {
   message: string;
   onRetry: () => void;
@@ -8,13 +10,18 @@ interface ErrorStateProps {
 export function ErrorState({ message, onRetry }: ErrorStateProps) {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', gap: 10, padding: 16 }}>
-      <Text style={{ color: '#b91c1c', textAlign: 'center' }}>{message}</Text>
+      <Text style={{ color: uiColors.border.danger, textAlign: 'center' }}>{message}</Text>
       <Pressable
         accessibilityRole="button"
         onPress={onRetry}
-        style={{ backgroundColor: '#0f766e', borderRadius: 10, paddingHorizontal: 14, paddingVertical: 10 }}
+        style={{
+          backgroundColor: uiColors.brand.primary,
+          borderRadius: 10,
+          paddingHorizontal: 14,
+          paddingVertical: 10,
+        }}
       >
-        <Text style={{ color: '#f0fdfa', fontWeight: '600' }}>Retry</Text>
+        <Text style={{ color: uiColors.text.inverse, fontWeight: '600' }}>Retry</Text>
       </Pressable>
     </View>
   );

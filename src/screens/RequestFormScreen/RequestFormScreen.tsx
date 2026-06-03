@@ -7,6 +7,7 @@ import { RequestForm } from '@/components/RequestForm/RequestForm';
 import { getServiceById } from '@/data/services';
 import { useRequestService } from '@/hooks/useRequestService';
 import { ServiceRequestFormValues } from '@/types/request';
+import { uiColors } from '@/utils/uiTokens';
 
 export default function RequestFormScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -33,8 +34,8 @@ export default function RequestFormScreen() {
     return (
       <ScrollView contentContainerStyle={{ padding: 16, gap: 12 }}>
         <Text style={{ fontSize: 24, fontWeight: '700' }}>Request Service</Text>
-        <Text style={{ color: '#4b5563' }}>{service.title}</Text>
-        <Text style={{ color: '#991b1b' }}>
+        <Text style={{ color: uiColors.text.secondary }}>{service.title}</Text>
+        <Text style={{ color: uiColors.text.danger }}>
           This service is currently unavailable. Try another service or come back later.
         </Text>
         <Pressable
@@ -46,10 +47,10 @@ export default function RequestFormScreen() {
             paddingVertical: 11,
             paddingHorizontal: 14,
             alignItems: 'center',
-            backgroundColor: '#0f766e',
+            backgroundColor: uiColors.brand.primary,
           }}
         >
-          <Text style={{ color: '#f0fdfa', fontWeight: '700' }}>Back to Details</Text>
+          <Text style={{ color: uiColors.text.inverse, fontWeight: '700' }}>Back to Details</Text>
         </Pressable>
       </ScrollView>
     );
@@ -58,22 +59,22 @@ export default function RequestFormScreen() {
   return (
     <ScrollView contentContainerStyle={{ padding: 16, gap: 12, paddingBottom: 36 }}>
       <Text style={{ fontSize: 24, fontWeight: '700' }}>Request Service</Text>
-      <Text style={{ color: '#4b5563' }}>Service: {service.title}</Text>
+      <Text style={{ color: uiColors.text.secondary }}>Service: {service.title}</Text>
 
       {submitSuccess ? (
         <View
           style={{
             borderRadius: 10,
             borderWidth: 1,
-            borderColor: '#15803d',
-            backgroundColor: '#f0fdf4',
+            borderColor: uiColors.border.success,
+            backgroundColor: uiColors.surface.success,
             padding: 12,
             gap: 6,
           }}
         >
-          <Text style={{ color: '#166534', fontWeight: '700' }}>Request submitted successfully</Text>
-          <Text style={{ color: '#166534' }}>{submitSuccess.message}</Text>
-          <Text style={{ color: '#166534' }}>Reference: {submitSuccess.requestId}</Text>
+          <Text style={{ color: uiColors.text.success, fontWeight: '700' }}>Request submitted successfully</Text>
+          <Text style={{ color: uiColors.text.success }}>{submitSuccess.message}</Text>
+          <Text style={{ color: uiColors.text.success }}>Reference: {submitSuccess.requestId}</Text>
           <Pressable
             accessibilityRole="button"
             onPress={clearFeedback}
@@ -82,10 +83,10 @@ export default function RequestFormScreen() {
               borderRadius: 8,
               paddingVertical: 8,
               alignItems: 'center',
-              backgroundColor: '#0f766e',
+              backgroundColor: uiColors.brand.primary,
             }}
           >
-            <Text style={{ color: '#f0fdfa', fontWeight: '600' }}>Create Another Request</Text>
+            <Text style={{ color: uiColors.text.inverse, fontWeight: '600' }}>Create Another Request</Text>
           </Pressable>
         </View>
       ) : null}
@@ -95,14 +96,14 @@ export default function RequestFormScreen() {
           style={{
             borderRadius: 10,
             borderWidth: 1,
-            borderColor: '#b91c1c',
-            backgroundColor: '#fef2f2',
+            borderColor: uiColors.border.danger,
+            backgroundColor: uiColors.surface.danger,
             padding: 12,
             gap: 6,
           }}
         >
-          <Text style={{ color: '#991b1b', fontWeight: '700' }}>Request failed</Text>
-          <Text style={{ color: '#991b1b' }}>{submitError}</Text>
+          <Text style={{ color: uiColors.text.danger, fontWeight: '700' }}>Request failed</Text>
+          <Text style={{ color: uiColors.text.danger }}>{submitError}</Text>
           <Pressable
             accessibilityRole="button"
             onPress={clearFeedback}
@@ -111,10 +112,10 @@ export default function RequestFormScreen() {
               borderRadius: 8,
               paddingVertical: 8,
               alignItems: 'center',
-              backgroundColor: '#b91c1c',
+              backgroundColor: uiColors.border.danger,
             }}
           >
-            <Text style={{ color: '#fff', fontWeight: '600' }}>Dismiss Error</Text>
+            <Text style={{ color: uiColors.text.white, fontWeight: '600' }}>Dismiss Error</Text>
           </Pressable>
         </View>
       ) : null}
