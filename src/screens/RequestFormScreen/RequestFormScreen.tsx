@@ -29,15 +29,14 @@ export default function RequestFormScreen() {
 
   if (!service) {
     return (
-<ScreenLayout>
+      <ScreenLayout>
         <EmptyState title="Service not found" description="Cannot create request for this service." />
       </ScreenLayout>
     );
   }
 
-    return (
+  return (
     <ScreenLayout>
-      <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
