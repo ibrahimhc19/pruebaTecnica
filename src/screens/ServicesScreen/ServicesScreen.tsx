@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { useCallback } from 'react';
+import { FlatList, ScrollView, Text, View } from 'react-native';
 import { router } from 'expo-router';
 
 import { CategoryChip } from '@/components/CategoryChip/CategoryChip';
@@ -21,19 +21,6 @@ export default function ServicesScreen() {
     activeCategory,
     setActiveCategory,
   } = useServices();
-
-  const chipListRef = useRef<FlatList<(typeof CATEGORY_OPTIONS)[number]>>(null);
-
-  const scrollToChip = useCallback((category: string) => {
-    const index = CATEGORY_OPTIONS.findIndex((c) => c.value === category);
-    if (index === -1 || !chipListRef.current) return;
-    chipListRef.current.scrollToIndex({ index, animated: true, viewPosition: 0.5 });
-  }, []);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => scrollToChip(activeCategory), 0);
-    return () => clearTimeout(timeout);
-  }, [activeCategory, scrollToChip]);
 
   const renderServiceItem = useCallback(
     ({ item }: { item: Service }) => (
@@ -61,27 +48,21 @@ export default function ServicesScreen() {
         </View>
 
         <Text style={{ fontSize: 19, fontWeight: '600', marginBottom: 10 }}>Categories</Text>
-        <FlatList
-          ref={chipListRef}
+        <ScrollView
           horizontal
-          data={CATEGORY_OPTIONS}
-          keyExtractor={(item) => item.value}
-          renderItem={({ item }) => (
+          showsHorizontalScrollIndicator={false}
+          style={{ marginBottom: 14 }}
+        >
+          {CATEGORY_OPTIONS.map((item) => (
             <CategoryChip
+              key={item.value}
               label={item.label}
               category={item.value}
               isActive={item.value === activeCategory}
               onPress={setActiveCategory}
             />
-          )}
-          onScrollToIndexFailed={({ index }) => {
-            setTimeout(() => {
-              chipListRef.current?.scrollToIndex({ index, animated: true, viewPosition: 0.5 });
-            }, 50);
-          }}
-          showsHorizontalScrollIndicator={false}
-          style={{ marginBottom: 14 }}
-        />
+          ))}
+        </ScrollView>
 
         <Text style={{ fontSize: 19, fontWeight: '600', marginBottom: 10 }}>All Services</Text>
       </>
