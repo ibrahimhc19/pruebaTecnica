@@ -1,15 +1,14 @@
 import { useCallback } from 'react';
-import { FlatList, ScrollView, Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import { router } from 'expo-router';
 
-import { CategoryChip } from '@/components/CategoryChip/CategoryChip';
+import { CategoriesBar } from '@/components/CategoryChip/CategoriesBar';
 import { EmptyState } from '@/components/EmptyState/EmptyState';
 import { ErrorState } from '@/components/ErrorState/ErrorState';
 import { LoadingState } from '@/components/LoadingState/LoadingState';
 import { ServiceCard } from '@/components/ServiceCard/ServiceCard';
 import { useServices } from '@/hooks/useServices';
 import { Service } from '@/types/service';
-import { CATEGORY_OPTIONS } from '@/data/categories';
 
 export default function ServicesScreen() {
   const {
@@ -32,44 +31,6 @@ export default function ServicesScreen() {
     [],
   );
 
-  const renderHeader = useCallback(
-    () => (
-      <>
-        <Text style={{ fontSize: 19, fontWeight: '600', marginBottom: 10 }}>Featured</Text>
-        <View style={{ marginBottom: 14 }}>
-          {featuredServices.map((service) => (
-            <ServiceCard
-              key={service.id}
-              service={service}
-              variant="featured"
-              onPress={() => router.push(`/services/${service.id}`)}
-            />
-          ))}
-        </View>
-
-        <Text style={{ fontSize: 19, fontWeight: '600', marginBottom: 10 }}>Categories</Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={{ marginBottom: 14 }}
-        >
-          {CATEGORY_OPTIONS.map((item) => (
-            <CategoryChip
-              key={item.value}
-              label={item.label}
-              category={item.value}
-              isActive={item.value === activeCategory}
-              onPress={setActiveCategory}
-            />
-          ))}
-        </ScrollView>
-
-        <Text style={{ fontSize: 19, fontWeight: '600', marginBottom: 10 }}>All Services</Text>
-      </>
-    ),
-    [activeCategory, featuredServices, setActiveCategory],
-  );
-
   if (isLoading) {
     return <LoadingState />;
   }
@@ -85,7 +46,28 @@ export default function ServicesScreen() {
         keyExtractor={(service) => service.id}
         renderItem={renderServiceItem}
         contentContainerStyle={{ padding: 16, paddingBottom: 36 }}
-        ListHeaderComponent={renderHeader}
+        ListHeaderComponent={
+          <>
+            <Text style={{ fontSize: 19, fontWeight: '600', marginBottom: 10 }}>Featured</Text>
+            <View style={{ marginBottom: 14 }}>
+              {featuredServices.map((service) => (
+                <ServiceCard
+                  key={service.id}
+                  service={service}
+                  variant="featured"
+                  onPress={() => router.push(`/services/${service.id}`)}
+                />
+              ))}
+            </View>
+
+            <CategoriesBar
+              activeCategory={activeCategory}
+              onSelect={setActiveCategory}
+            />
+
+            <Text style={{ fontSize: 19, fontWeight: '600', marginBottom: 10 }}>All Services</Text>
+          </>
+        }
         ListEmptyComponent={<EmptyState />}
         showsVerticalScrollIndicator={false}
       />
